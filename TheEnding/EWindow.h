@@ -1,5 +1,8 @@
 #pragma once
 #include "EndingWin.h"
+#include "Keyboard.h"
+#include "Mouse.h"
+#include <optional>
 class Window
 {
 	// singleton manages registration/cleanup of window class
@@ -23,6 +26,7 @@ public:
 	Window(const Window&) = delete;
 	Window& operator=(const Window&) = delete;
 
+	static std::optional<int> ProcessMessages();
 private:
 
 	// 通过这三个，实现每一个窗口实例自己有一套信息处理方式
@@ -30,6 +34,9 @@ private:
 	static LRESULT CALLBACK HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 	LRESULT HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 
+public:
+	Keyboard kbd;
+	Mouse mouse;
 private:
 	int width;
 	int height;
