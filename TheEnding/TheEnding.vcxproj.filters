@@ -22,6 +22,12 @@
     <Filter Include="Drawable">
       <UniqueIdentifier>{17912491-a53b-47e2-958a-b431587211c8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Geometry">
+      <UniqueIdentifier>{fb8fdab0-1310-4d26-b867-38180ee4bf12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Texture">
+      <UniqueIdentifier>{5a0498cc-63c9-49c8-b232-8aa025e7de8f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EWindow.cpp">
@@ -77,6 +83,15 @@
     </ClCompile>
     <ClCompile Include="TransformCbuf.cpp">
       <Filter>Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="Sampler.cpp">
+      <Filter>Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="WICTextureLoader.cpp">
+      <Filter>Texture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +154,27 @@
     </ClInclude>
     <ClInclude Include="TransformCbuf.h">
       <Filter>Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="IndexedTriangleList.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="EMath.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Sampler.h">
+      <Filter>Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="WICTextureLoader.h">
+      <Filter>Texture</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

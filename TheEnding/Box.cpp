@@ -1,7 +1,6 @@
 #include "Box.h"
 #include "BindableBase.h"
-
-
+#include "Cube.h"
 Box::Box(Graphics& gfx,
 	std::mt19937& rng,
 	std::uniform_real_distribution<float>& adist,
@@ -20,71 +19,36 @@ Box::Box(Graphics& gfx,
 	theta(adist(rng)),
 	phi(adist(rng))
 {
+	namespace dx = DirectX;
+
 	struct Vertex
 	{
+		dx::XMFLOAT3 pos;
 		struct
 		{
-			float x;
-			float y;
-			float z;
-		} pos;
+			float u;
+			float v;
+		} tex;
 	};
-	const std::vector<Vertex> vertices =
-	{
-		{ -1.0f,-1.0f,-1.0f },
-		{ 1.0f,-1.0f,-1.0f },
-		{ -1.0f,1.0f,-1.0f },
-		{ 1.0f,1.0f,-1.0f },
-		{ -1.0f,-1.0f,1.0f },
-		{ 1.0f,-1.0f,1.0f },
-		{ -1.0f,1.0f,1.0f },
-		{ 1.0f,1.0f,1.0f },
-	};
-	AddBind(std::make_unique<VertexBuffer>(gfx, vertices));
+	const auto model = Cube::MakeSkinned<Vertex>();
 
-	auto pvs = std::make_unique<VertexShader>(gfx, L"VertexSHader.cso");
+	AddBind(std::make_unique<VertexBuffer>(gfx, model.vertices));
+
+	auto pvs = std::make_unique<VertexShader>(gfx, L"VertexShader1.cso");
 	auto pvsbc = pvs->GetBytecode();
 	AddBind(std::move(pvs));
 
 	AddBind(std::make_unique<PixelShader>(gfx, L"PixelShader1.cso"));
 
-	const std::vector<unsigned short> indices =
-	{
-		0,2,1, 2,3,1,
-		1,3,5, 3,7,5,
-		2,6,3, 3,6,7,
-		4,5,7, 4,7,6,
-		0,4,2, 2,4,6,
-		0,1,4, 1,5,4
-	};
-	AddIndexBuffer(std::make_unique<IndexBuffer>(gfx, indices));
+	AddIndexBuffer(std::make_unique<IndexBuffer>(gfx, model.indices));
 
-	struct ConstantBuffer2
-	{
-		struct
-		{
-			float r;
-			float g;
-			float b;
-			float a;
-		} face_colors[6];
-	};
-	const ConstantBuffer2 cb2 =
-	{
-		{
-			{ 1.0f,0.0f,1.0f ,1.0f},
-			{ 1.0f,0.0f,0.0f ,1.0f},
-			{ 0.0f,1.0f,0.0f ,1.0f},
-			{ 0.0f,0.0f,1.0f ,1.0f},
-			{ 1.0f,1.0f,0.0f ,1.0f},
-			{ 0.0f,1.0f,1.0f ,1.0f}
-		}
-	};
-	AddBind(std::make_unique<PixelConstantBuffer<ConstantBuffer2>>(gfx, cb2));
+	AddBind(std::make_unique<Texture>(gfx, L"Images\\cube.png"));
 
+	
 	const std::vector<D3D11_INPUT_ELEMENT_DESC> ied =
 	{
 		{ "Position",0,DXGI_FORMAT_R32G32B32_FLOAT,0,0,D3D11_INPUT_PER_VERTEX_DATA,0 },
+		{ "TexCoord",0,DXGI_FORMAT_R32G32_FLOAT,0,12,D3D11_INPUT_PER_VERTEX_DATA,0 },
 	};
 	AddBind(std::make_unique<InputLayout>(gfx, ied, pvsbc));
 
