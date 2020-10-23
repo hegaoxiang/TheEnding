@@ -151,5 +151,8 @@
     <FxCompile Include="PixelShader1.hlsl">
       <Filter>HLSL</Filter>
     </FxCompile>
+    <FxCompile Include="VertexShader1.hlsl">
+      <Filter>HLSL</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
