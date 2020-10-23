@@ -150,6 +150,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="App.cpp" />
+    <ClCompile Include="DXTrace.cpp" />
     <ClCompile Include="EWindow.cpp" />
     <ClCompile Include="Graphics.cpp" />
     <ClCompile Include="Keyboard.cpp" />
@@ -159,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="App.h" />
+    <ClInclude Include="DXTrace.h" />
     <ClInclude Include="EndingWin.h" />
     <ClInclude Include="EWindow.h" />
     <ClInclude Include="Graphics.h" />

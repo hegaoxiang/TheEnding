@@ -1,6 +1,6 @@
 #pragma once
 #include "EndingWin.h"
-
+#include "DXTrace.h"
 #include <d3d11.h>
 class Graphics
 {

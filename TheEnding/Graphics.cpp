@@ -23,7 +23,7 @@ Graphics::Graphics(HWND hWnd)
 	sd.Flags = 0;
 
 	// create device and front/back buffers, and swap chain and rendering context
-	D3D11CreateDeviceAndSwapChain(
+	HR(D3D11CreateDeviceAndSwapChain(
 		nullptr,
 		D3D_DRIVER_TYPE_HARDWARE,
 		nullptr,
@@ -36,17 +36,17 @@ Graphics::Graphics(HWND hWnd)
 		&pDevice,
 		nullptr,
 		&pContext
-	);
+	));
 
 	// gain access to texture subresource in swap chain (back buffer)
 	ID3D11Resource* pBackBuffer = nullptr;
-	pSwap->GetBuffer(0, __uuidof(ID3D11Resource), reinterpret_cast<void**>(&pBackBuffer));
+	HR(pSwap->GetBuffer(0, __uuidof(ID3D11Resource), reinterpret_cast<void**>(&pBackBuffer)));
 
-	pDevice->CreateRenderTargetView(
+	HR(pDevice->CreateRenderTargetView(
 		pBackBuffer,
 		nullptr,
 		&pTarget
-	);
+	));
 	pBackBuffer->Release();
 }
 
