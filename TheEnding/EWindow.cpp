@@ -53,6 +53,8 @@ Window::Window(int width, int height, const wchar_t* name) noexcept
 	);
 	// show window
 	ShowWindow(hWnd, SW_SHOWDEFAULT);
+	// create graphics object
+	pGfx = std::make_unique<Graphics>(hWnd);
 }
 
 Window::~Window()
@@ -80,6 +82,11 @@ std::optional<int> Window::ProcessMessages()
 	// return empty optional when not quitting app
 	return {};
 }
+Graphics& Window::Gfx()
+{
+	return *pGfx;
+}
+
 LRESULT CALLBACK Window::HandleMsgSetup(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept
 {
 	// use create parameter passed in from CreateWindow() to store window class pointer at WinAPI side
