@@ -1,7 +1,7 @@
 #include "Graphics.h"
 
 #pragma comment(lib,"d3d11.lib")
-
+namespace wrl = Microsoft::WRL;
 
 Graphics::Graphics(HWND hWnd)
 {
@@ -39,15 +39,9 @@ Graphics::Graphics(HWND hWnd)
 	));
 
 	// gain access to texture subresource in swap chain (back buffer)
-	ID3D11Resource* pBackBuffer = nullptr;
-	HR(pSwap->GetBuffer(0, __uuidof(ID3D11Resource), reinterpret_cast<void**>(&pBackBuffer)));
-
-	HR(pDevice->CreateRenderTargetView(
-		pBackBuffer,
-		nullptr,
-		&pTarget
-	));
-	pBackBuffer->Release();
+	wrl::ComPtr<ID3D11Resource> pBackBuffer;
+	HR(pSwap->GetBuffer(0, __uuidof(ID3D11Resource), &pBackBuffer));
+	HR(pDevice->CreateRenderTargetView(pBackBuffer.Get(), nullptr, &pTarget));
 }
 
 Graphics::~Graphics()
@@ -78,5 +72,5 @@ void Graphics::EndFrame()
 void Graphics::ClearBuffer(float red, float green, float blue) noexcept
 {
 	const float color[] = { red,green,blue,1.0f };
-	pContext->ClearRenderTargetView(pTarget, color);
+	pContext->ClearRenderTargetView(pTarget.Get(), color);
 }
